@@ -17,6 +17,7 @@
 
 package org.nuxeo.ecm.showcase.content;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
@@ -30,6 +31,7 @@ import java.net.URL;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.nuxeo.ecm.core.api.CoreSession;
+import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.DocumentModelList;
 import org.nuxeo.ecm.core.test.annotations.Granularity;
 import org.nuxeo.ecm.core.test.annotations.RepositoryConfig;
@@ -69,9 +71,12 @@ public class TestShowcaseContentImporter {
         ShowcaseContentImporter importer = new ShowcaseContentImporter(session);
 
         assertFalse(importer.isImported());
-        importer.importContent(new File(resource.toURI()).toPath().toString());
+        importer.create(new File(resource.toURI()).toPath().toString());
 
         assertTrue(importer.isImported());
         assertNotEquals(docsSize, session.query("select * from Document").size());
+
+        DocumentModel file = session.query("select * from File").get(0);
+        assertEquals("24dcbf08-0242-4729-b873-48d64b5f0011", file.getId());
     }
 }

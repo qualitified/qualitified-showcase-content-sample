@@ -48,7 +48,7 @@ public class InitListener implements PostContentCreationHandler {
                 throw new IOException("Unable to found " + SHOWCASE_CONTENT + " resource.");
             }
 
-            new ShowcaseContentImporter(session).importContent(url.toString());
+            new ShowcaseContentImporter(session).create(url.toString());
             log.info("Showcase content imported.");
         } catch (IOException e) {
             log.error(e, e);

@@ -21,16 +21,30 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.zip.ZipFile;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.nuxeo.common.utils.Path;
+import org.nuxeo.ecm.core.api.Blob;
+import org.nuxeo.ecm.core.api.CloseableFile;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
+import org.nuxeo.ecm.core.api.DocumentRef;
+import org.nuxeo.ecm.core.api.IdRef;
+import org.nuxeo.ecm.core.api.PathRef;
 import org.nuxeo.ecm.core.api.impl.blob.FileBlob;
+import org.nuxeo.ecm.core.io.DocumentPipe;
+import org.nuxeo.ecm.core.io.DocumentReader;
+import org.nuxeo.ecm.core.io.DocumentWriter;
+import org.nuxeo.ecm.core.io.ExportedDocument;
+import org.nuxeo.ecm.core.io.impl.DocumentPipeImpl;
+import org.nuxeo.ecm.core.io.impl.plugins.NuxeoArchiveReader;
 import org.nuxeo.ecm.platform.audit.api.AuditLogger;
 import org.nuxeo.ecm.platform.audit.api.AuditReader;
 import org.nuxeo.ecm.platform.audit.api.LogEntry;
 import org.nuxeo.ecm.platform.filemanager.api.FileManager;
+import org.nuxeo.ecm.platform.filemanager.service.extension.ExportedZipImporter;
 import org.nuxeo.runtime.api.Framework;
 
 /**
@@ -48,7 +62,7 @@ public class ShowcaseContentImporter {
         this.session = session;
     }
 
-    public DocumentModel importContent(String filePath) throws IOException {
+    public DocumentModel create(String filePath) throws IOException {
         if (isImported()) {
             log.debug("Showcase Content already imported.");
         }
@@ -59,11 +73,58 @@ public class ShowcaseContentImporter {
         }
 
         FileManager importer = Framework.getLocalService(FileManager.class);
-        DocumentModel doc = importer.createDocumentFromBlob(session, new FileBlob(file), getImportPathRoot(), true,
-                filePath);
+        DocumentModel doc = create(session, new FileBlob(file), getImportPathRoot(), true);
 
         markImportDone();
         return doc;
+    }
+
+    protected DocumentModel create(CoreSession documentManager, Blob content, String path, boolean overwrite)
+            throws IOException {
+        try (CloseableFile source = content.getCloseableFile()) {
+            ZipFile zip = ExportedZipImporter.getArchiveFileIfValid(source.getFile());
+            if (zip == null) {
+                return null;
+            }
+            zip.close();
+
+            boolean importWithIds = false;
+            DocumentReader reader = new NuxeoArchiveReader(source.getFile());
+            ExportedDocument root = reader.read();
+            IdRef rootRef = new IdRef(root.getId());
+
+            if (documentManager.exists(rootRef)) {
+                DocumentModel target = documentManager.getDocument(rootRef);
+                if (target.getPath().removeLastSegments(1).equals(new Path(path))) {
+                    importWithIds = true;
+                }
+            }
+
+            DocumentWriter writer = new ShowcaseWriter(documentManager, path, 10);
+            reader.close();
+            reader = new NuxeoArchiveReader(source.getFile());
+
+            DocumentRef resultingRef;
+            if (overwrite && importWithIds) {
+                resultingRef = rootRef;
+            } else {
+                String rootName = root.getPath().lastSegment();
+                resultingRef = new PathRef(path, rootName);
+            }
+
+            try {
+                DocumentPipe pipe = new DocumentPipeImpl(10);
+                pipe.setReader(reader);
+                pipe.setWriter(writer);
+                pipe.run();
+            } catch (IOException e) {
+                log.warn(e, e);
+            } finally {
+                reader.close();
+                writer.close();
+            }
+            return documentManager.getDocument(resultingRef);
+        }
     }
 
     protected boolean isImported() {
