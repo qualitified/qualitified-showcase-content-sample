@@ -17,6 +17,11 @@
 
 package org.nuxeo.ecm.showcase.content;
 
+import static org.nuxeo.ecm.platform.picture.api.ImagingDocumentConstants.CTX_FORCE_VIEWS_GENERATION;
+import static org.nuxeo.ecm.platform.picture.api.ImagingDocumentConstants.PICTURE_FACET;
+import static org.nuxeo.ecm.platform.video.VideoConstants.CTX_FORCE_INFORMATIONS_GENERATION;
+import static org.nuxeo.ecm.platform.video.VideoConstants.VIDEO_FACET;
+
 import java.util.Collections;
 
 import org.apache.commons.logging.Log;
@@ -63,7 +68,9 @@ public class ShowcaseWriter extends DocumentModelWriter {
         // set lifecycle state at creation
         Element system = xdoc.getDocument().getRootElement().element(ExportConstants.SYSTEM_TAG);
         String lifeCycleState = system.element(ExportConstants.LIFECYCLE_STATE_TAG).getText();
-        doc.putContextData("initialLifecycleState", lifeCycleState);
+        doc.putContextData(CoreSession.IMPORT_LIFECYCLE_STATE, lifeCycleState);
+        String lifeCyclePolicy = system.element(ExportConstants.LIFECYCLE_POLICY_TAG).getText();
+        doc.putContextData(CoreSession.IMPORT_LIFECYCLE_POLICY, lifeCyclePolicy);
 
         // loadFacets before schemas so that additional schemas are not skipped
         loadFacetsInfo(doc, xdoc.getDocument());
@@ -73,6 +80,15 @@ public class ShowcaseWriter extends DocumentModelWriter {
 
         if (doc.hasSchema("uid")) {
             doc.putContextData(ScopeType.REQUEST, VersioningService.SKIP_VERSIONING, true);
+        }
+
+        // XXX Not used, as we override the listener; but it is the right way to force video informations generation.
+        if (doc.hasFacet(VIDEO_FACET)) {
+            doc.putContextData(CTX_FORCE_INFORMATIONS_GENERATION, true);
+        }
+
+        if (doc.hasFacet(PICTURE_FACET)) {
+            doc.putContextData(CTX_FORCE_VIEWS_GENERATION, true);
         }
 
         session.importDocuments(Collections.singletonList(doc));

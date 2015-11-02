@@ -17,7 +17,6 @@
 
 package org.nuxeo.ecm.showcase.content;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.Collections;
@@ -33,7 +32,6 @@ import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.DocumentRef;
 import org.nuxeo.ecm.core.api.IdRef;
 import org.nuxeo.ecm.core.api.PathRef;
-import org.nuxeo.ecm.core.api.impl.blob.FileBlob;
 import org.nuxeo.ecm.core.io.DocumentPipe;
 import org.nuxeo.ecm.core.io.DocumentReader;
 import org.nuxeo.ecm.core.io.DocumentWriter;
@@ -41,8 +39,8 @@ import org.nuxeo.ecm.core.io.ExportedDocument;
 import org.nuxeo.ecm.core.io.impl.DocumentPipeImpl;
 import org.nuxeo.ecm.core.io.impl.plugins.NuxeoArchiveReader;
 import org.nuxeo.ecm.platform.audit.api.AuditLogger;
-import org.nuxeo.ecm.platform.audit.api.AuditReader;
 import org.nuxeo.ecm.platform.audit.api.LogEntry;
+import org.nuxeo.ecm.platform.audit.api.Logs;
 import org.nuxeo.ecm.platform.filemanager.api.FileManager;
 import org.nuxeo.ecm.platform.filemanager.service.extension.ExportedZipImporter;
 import org.nuxeo.runtime.api.Framework;
@@ -62,18 +60,14 @@ public class ShowcaseContentImporter {
         this.session = session;
     }
 
-    public DocumentModel create(String filePath) throws IOException {
+    public DocumentModel create(Blob blob) throws IOException {
         if (isImported()) {
             log.debug("Showcase Content already imported.");
-        }
-
-        File file = new File(filePath);
-        if (!file.exists()) {
-            throw new IOException("File " + filePath + " not found.");
+            return null;
         }
 
         FileManager importer = Framework.getLocalService(FileManager.class);
-        DocumentModel doc = create(session, new FileBlob(file), getImportPathRoot(), true);
+        DocumentModel doc = create(session, blob, getImportPathRoot(), true);
 
         markImportDone();
         return doc;
@@ -81,7 +75,7 @@ public class ShowcaseContentImporter {
 
     protected DocumentModel create(CoreSession documentManager, Blob content, String path, boolean overwrite)
             throws IOException {
-        try (CloseableFile source = content.getCloseableFile()) {
+        try (CloseableFile source = content.getCloseableFile(".zip")) {
             ZipFile zip = ExportedZipImporter.getArchiveFileIfValid(source.getFile());
             if (zip == null) {
                 return null;
@@ -128,13 +122,11 @@ public class ShowcaseContentImporter {
     }
 
     protected boolean isImported() {
-        AuditReader audit = Framework.getLocalService(AuditReader.class);
-        return !audit.nativeQuery(String.format("from LogEntry log where log.eventId='%s'", INITIALIZED_EVENT), 0, 1)
-                     .isEmpty();
+        return Framework.getService(Logs.class).getEventsCount(INITIALIZED_EVENT) > 0;
     }
 
     protected String getImportPathRoot() {
-        return session.getRootDocument().getPathAsString();
+        return session.query("Select * from Domain").get(0).getPathAsString();
     }
 
     protected void markImportDone() {
