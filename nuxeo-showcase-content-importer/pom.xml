@@ -1,7 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <parent>
     <groupId>org.nuxeo.ecm.platform</groupId>
     <artifactId>nuxeo-showcase-content-parent</artifactId>
@@ -12,6 +12,10 @@
   <artifactId>nuxeo-showcase-content-importer</artifactId>
   <name>Nuxeo Showcase Content Importer</name>
   <description>Nuxeo Showcase Content Importer</description>
+
+  <properties>
+    <sample.data.version>1.0</sample.data.version>
+  </properties>
 
   <dependencies>
     <dependency>
@@ -50,7 +54,6 @@
       <groupId>org.nuxeo.ecm.platform</groupId>
       <artifactId>nuxeo-platform-video-core</artifactId>
     </dependency>
-
 
     <!-- test dependencies -->
     <dependency>
@@ -91,29 +94,44 @@
     </dependency>
   </dependencies>
 
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-showcase-content-sample-data</artifactId>
+        <version>${sample.data.version}</version>
+        <type>zip</type>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
   <build>
     <plugins>
       <plugin>
-        <artifactId>maven-resources-plugin</artifactId>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
         <executions>
           <execution>
-            <id>copy-resources</id>
-            <phase>validate</phase>
+            <id>copy-showcase-sample-data</id>
+            <phase>process-resources</phase>
             <goals>
-              <goal>copy-resources</goal>
+              <goal>copy</goal>
             </goals>
             <configuration>
-              <outputDirectory>${basedir}/target/classes/</outputDirectory>
-              <resources>
-                <resource>
-                  <directory>/tmp/test-resources</directory>
-                </resource>
-              </resources>
+              <artifactItems>
+                <artifactItem>
+                  <groupId>org.nuxeo.ecm.platform</groupId>
+                  <artifactId>nuxeo-showcase-content-sample-data</artifactId>
+                  <type>zip</type>
+                  <overWrite>true</overWrite>
+                  <destFileName>showcase_content.zip</destFileName>
+                </artifactItem>
+              </artifactItems>
+              <outputDirectory>${project.build.directory}/classes</outputDirectory>
             </configuration>
           </execution>
         </executions>
       </plugin>
     </plugins>
   </build>
-
 </project>
