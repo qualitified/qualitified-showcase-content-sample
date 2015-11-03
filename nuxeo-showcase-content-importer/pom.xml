@@ -13,10 +13,6 @@
   <name>Nuxeo Showcase Content Importer</name>
   <description>Nuxeo Showcase Content Importer</description>
 
-  <properties>
-    <sample.data.version>1.0</sample.data.version>
-  </properties>
-
   <dependencies>
     <dependency>
       <groupId>org.nuxeo.common</groupId>
@@ -93,17 +89,6 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.nuxeo.ecm.platform</groupId>
-        <artifactId>nuxeo-showcase-content-sample-data</artifactId>
-        <version>${sample.data.version}</version>
-        <type>zip</type>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
 
   <build>
     <plugins>
