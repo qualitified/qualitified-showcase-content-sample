@@ -1,4 +1,4 @@
-<project name="nuxeo-sample-explicit-assembly"
+<project name="nuxeo-showcase-content-assembly"
          default="build"
          xmlns:nx="urn:nuxeo-build"
          xmlns:artifact="urn:nuxeo-artifact">
