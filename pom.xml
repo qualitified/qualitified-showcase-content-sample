@@ -15,37 +15,27 @@
   <description>Nuxeo Showcase Content Parent</description>
 
   <properties>
-    <nuxeo.version>7.10-SNAPSHOT</nuxeo.version>
-    <marketplace.version>1.0.0-SNAPSHOT</marketplace.version>
     <sample.data.version>1.0</sample.data.version>
   </properties>
 
   <modules>
     <module>nuxeo-showcase-content-importer</module>
+    <module>marketplace</module>
   </modules>
-
-  <profiles>
-    <profile>
-      <id>marketplace</id>
-      <modules>
-        <module>marketplace</module>
-      </modules>
-    </profile>
-  </profiles>
 
   <dependencyManagement>
     <dependencies>
       <dependency>
         <groupId>org.nuxeo.ecm.distribution</groupId>
         <artifactId>nuxeo-distribution</artifactId>
-        <version>${nuxeo.version}</version>
+        <version>${project.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
       <dependency>
         <groupId>org.nuxeo.ecm.platform</groupId>
         <artifactId>nuxeo-showcase-content-importer</artifactId>
-        <version>${nuxeo.version}</version>
+        <version>${project.version}</version>
       </dependency>
       <dependency>
         <groupId>org.nuxeo.ecm.platform</groupId>
@@ -80,8 +70,8 @@
   </repositories>
 
   <scm>
-    <connection>scm:git:git://github.com/nuxeo/nuxeo-platform-login.git</connection>
-    <developerConnection>scm:git:ssh://git@github.com:nuxeo/nuxeo-platform-login.git</developerConnection>
-    <url>https://github.com/nuxeo/nuxeo-platform-login</url>
+    <connection>scm:git:git://github.com/nuxeo/nuxeo-showcase-content-sample.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com:nuxeo/nuxeo-showcase-content-sample.git</developerConnection>
+    <url>https://github.com/nuxeo/nuxeo-showcase-content-sample</url>
   </scm>
 </project>

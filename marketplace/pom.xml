@@ -9,7 +9,6 @@
   </parent>
 
   <artifactId>nuxeo-showcase-content-marketplace</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
   <packaging>zip</packaging>
   <name>Nuxeo Showcase Content - Marketplace package</name>
 
