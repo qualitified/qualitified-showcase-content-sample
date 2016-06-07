@@ -13,7 +13,7 @@
   <description>Nuxeo Showcase Content Parent</description>
 
   <properties>
-    <sample.data.version>1.1</sample.data.version>
+    <sample.data.version>1.2</sample.data.version>
   </properties>
 
   <modules>
