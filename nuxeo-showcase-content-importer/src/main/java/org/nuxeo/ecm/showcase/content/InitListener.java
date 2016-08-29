@@ -28,6 +28,7 @@ import org.nuxeo.ecm.core.api.Blob;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.impl.blob.URLBlob;
 import org.nuxeo.ecm.platform.content.template.service.PostContentCreationHandler;
+import org.nuxeo.ecm.showcase.content.service.ShowcaseContentService;
 import org.nuxeo.runtime.api.Framework;
 
 /**
@@ -38,25 +39,12 @@ public class InitListener implements PostContentCreationHandler {
 
     private static final Log log = LogFactory.getLog(InitListener.class);
 
-    private static final String SHOWCASE_CONTENT = "showcase_content.zip";
-
     @Override
     public void execute(CoreSession session) {
         if (Framework.isTestModeSet()) {
             return;
         }
 
-        try {
-            URL url = getClass().getClassLoader().getResource(SHOWCASE_CONTENT);
-            if (url == null) {
-                throw new IOException("Unable to found " + SHOWCASE_CONTENT + " resource.");
-            }
-
-            Blob blob = new URLBlob(url);
-            new ShowcaseContentImporter(session).create(blob);
-            log.info("Showcase content imported.");
-        } catch (IOException e) {
-            log.error(e, e);
-        }
+        Framework.getService(ShowcaseContentService.class).triggerImporters(session);
     }
 }

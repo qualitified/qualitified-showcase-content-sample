@@ -64,8 +64,8 @@ public class ShowcaseWriter extends DocumentModelWriter {
         Path parentPath = toPath.removeLastSegments(1);
         String name = toPath.lastSegment();
 
-        DocumentModel doc = new DocumentModelImpl(null, xdoc.getType(), xdoc.getId(), toPath, null, null, new PathRef(
-                parentPath.toString()), null, null, null, null);
+        DocumentModel doc = new DocumentModelImpl(null, xdoc.getType(), xdoc.getId(), toPath, null, null,
+                new PathRef(parentPath.toString()), null, null, null, null);
 
         // set lifecycle state at creation
         Element system = xdoc.getDocument().getRootElement().element(ExportConstants.SYSTEM_TAG);
