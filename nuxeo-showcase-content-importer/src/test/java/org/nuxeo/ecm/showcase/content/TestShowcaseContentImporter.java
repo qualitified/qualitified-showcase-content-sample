@@ -69,7 +69,7 @@ public class TestShowcaseContentImporter {
         URL resource = getClass().getClassLoader().getResource("export.zip");
         assertNotNull(resource);
 
-        ShowcaseContentImporter importer = new ShowcaseContentImporter(session);
+        ShowcaseContentImporter importer = new ShowcaseContentImporter(session, "default");
 
         assertFalse(importer.isImported());
         importer.create(new URLBlob(resource));

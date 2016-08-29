@@ -13,10 +13,6 @@
   <version>8.3.1-SNAPSHOT</version>
   <description>Nuxeo Showcase Content Parent</description>
 
-  <properties>
-    <sample.data.version>1.2</sample.data.version>
-  </properties>
-
   <modules>
     <module>nuxeo-showcase-content-importer</module>
   </modules>
@@ -27,12 +23,6 @@
         <groupId>org.nuxeo.ecm.platform</groupId>
         <artifactId>nuxeo-showcase-content-importer</artifactId>
         <version>${project.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>org.nuxeo.ecm.platform</groupId>
-        <artifactId>nuxeo-showcase-content-sample-data</artifactId>
-        <version>${sample.data.version}</version>
-        <type>zip</type>
       </dependency>
     </dependencies>
   </dependencyManagement>
