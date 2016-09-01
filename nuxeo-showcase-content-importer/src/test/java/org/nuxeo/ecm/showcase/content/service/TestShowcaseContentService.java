@@ -1,12 +1,10 @@
 package org.nuxeo.ecm.showcase.content.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
+import org.nuxeo.ecm.core.api.DocumentModelList;
 import org.nuxeo.ecm.core.test.annotations.Granularity;
 import org.nuxeo.ecm.core.test.annotations.RepositoryConfig;
 import org.nuxeo.ecm.platform.audit.AuditFeature;
@@ -20,6 +18,8 @@ import org.nuxeo.runtime.test.runner.LocalDeploy;
 
 import java.util.List;
 
+import static org.junit.Assert.*;
+
 @RunWith(FeaturesRunner.class)
 @Features({ PlatformFeature.class, AuditFeature.class })
 @RepositoryConfig(cleanup = Granularity.METHOD)
@@ -30,6 +30,8 @@ import java.util.List;
         "org.nuxeo.ecm.platform.filemanager.core" })
 @LocalDeploy({ "org.nuxeo.ecm.content.showcase:contrib.xml" })
 public class TestShowcaseContentService {
+
+    public static final String DOC_ID = "921f3887-6270-49ea-bec0-2dd48ba44a89";
 
     @Inject
     protected ShowcaseContentService showcaseContentService;
@@ -51,7 +53,12 @@ public class TestShowcaseContentService {
 
         showcaseContentService.triggerImporters(session);
 
-        DocumentModel file = session.query("select * from File").get(0);
-        assertEquals("24dcbf08-0242-4729-b873-48d64b5f0011", file.getId());
+        DocumentModelList docs = session.query("select * from File");
+        assertEquals(1, docs.size());
+        assertTrue(docs.stream().anyMatch(s -> s.getId().equals(DOC_ID)));
+
+        docs = session.query("select * from Note");
+        assertEquals(1, docs.size());
+        assertTrue(docs.get(0).getPropertyValue("dublincore:creator").equals("arthur"));
     }
 }

@@ -19,6 +19,7 @@
 
 package org.nuxeo.ecm.showcase.content;
 
+import static org.nuxeo.ecm.core.api.validation.DocumentValidationService.Forcing.TURN_OFF;
 import static org.nuxeo.ecm.platform.picture.api.ImagingDocumentConstants.CTX_FORCE_VIEWS_GENERATION;
 import static org.nuxeo.ecm.platform.picture.api.ImagingDocumentConstants.PICTURE_FACET;
 import static org.nuxeo.ecm.platform.video.VideoConstants.CTX_FORCE_INFORMATIONS_GENERATION;
@@ -35,6 +36,7 @@ import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.PathRef;
 import org.nuxeo.ecm.core.api.impl.DocumentModelImpl;
+import org.nuxeo.ecm.core.api.validation.DocumentValidationService;
 import org.nuxeo.ecm.core.io.ExportConstants;
 import org.nuxeo.ecm.core.io.ExportedDocument;
 import org.nuxeo.ecm.core.io.impl.plugins.DocumentModelWriter;
@@ -73,6 +75,7 @@ public class ShowcaseWriter extends DocumentModelWriter {
         doc.putContextData(CoreSession.IMPORT_LIFECYCLE_STATE, lifeCycleState);
         String lifeCyclePolicy = system.element(ExportConstants.LIFECYCLE_POLICY_TAG).getText();
         doc.putContextData(CoreSession.IMPORT_LIFECYCLE_POLICY, lifeCyclePolicy);
+        doc.putContextData(DocumentValidationService.CTX_MAP_KEY, TURN_OFF);
 
         // loadFacets before schemas so that additional schemas are not skipped
         loadFacetsInfo(doc, xdoc.getDocument());
