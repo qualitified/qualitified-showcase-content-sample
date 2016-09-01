@@ -5,7 +5,6 @@ This addon import a set of showcase content containing office documents, images,
 ## Modules
 
 - nuxeo-showcase-content-importer: Showcase content Importer bundle
-- marketplace: Nuxeo package
 
 ## Building all modules
 
@@ -16,14 +15,14 @@ This addon import a set of showcase content containing office documents, images,
 - Import latest released Version
 - Remove old or deprecated documents; without forgetting to clean the trash
 - Import new documents
-- To lighter the zip export file, cleanup all picture views, transcoded videos, etc. Execute this SQL query:
+- To lighter the zip export file, cleanup all picture views, transcoded videos, etc. Execute this SQL query using your prefered SQL client:
 ```
 delete from hierarchy where primarytype  = 'view' or primarytype = 'storyboarditem' or primarytype = 'transcodedVideoItem';
 ```
 - Cleanup CoreSession cache
 - Make a `Zip Tree Export` from `Workspaces`
 - Upload it on Nexus, GAV: `org.nuxeo.ecm.platform:nuxeo-showcase-content-sample-data:NEXT_VERSION`
-- Update sources to depend on the new file version
+- Update Marketplace `nuxeo/marketplace-showcase-content-sample` project to use the correct data version.
 
 # About Nuxeo
 

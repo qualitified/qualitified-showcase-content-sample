@@ -19,10 +19,8 @@
 
 package org.nuxeo.ecm.showcase.content;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
+import static org.nuxeo.ecm.showcase.content.service.TestShowcaseContentService.DOC_ID;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -77,7 +75,7 @@ public class TestShowcaseContentImporter {
         // assertTrue(importer.isImported());
         assertNotEquals(docsSize, session.query("select * from Document").size());
 
-        DocumentModel file = session.query("select * from File").get(0);
-        assertEquals("24dcbf08-0242-4729-b873-48d64b5f0011", file.getId());
+        DocumentModelList docs = session.query("select * from File");
+        assertTrue(docs.stream().anyMatch(s -> s.getId().equals(DOC_ID)));
     }
 }
