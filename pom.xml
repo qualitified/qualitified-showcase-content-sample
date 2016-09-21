@@ -10,7 +10,7 @@
   <artifactId>nuxeo-showcase-content-parent</artifactId>
   <name>Nuxeo Showcase Content Parent</name>
   <packaging>pom</packaging>
-  <version>8.3.1-SNAPSHOT</version>
+  <version>8.3.1</version>
   <description>Nuxeo Showcase Content Parent</description>
 
   <modules>
