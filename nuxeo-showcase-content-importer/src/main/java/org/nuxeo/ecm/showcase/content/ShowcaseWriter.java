@@ -30,7 +30,6 @@ import java.util.Collections;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Element;
-import org.nuxeo.common.collections.ScopeType;
 import org.nuxeo.common.utils.Path;
 import org.nuxeo.ecm.core.api.CoreSession;
 import org.nuxeo.ecm.core.api.DocumentModel;
@@ -84,7 +83,7 @@ public class ShowcaseWriter extends DocumentModelWriter {
         loadSchemas(xdoc, doc, xdoc.getDocument());
 
         if (doc.hasSchema("uid")) {
-            doc.putContextData(ScopeType.REQUEST, VersioningService.SKIP_VERSIONING, true);
+            doc.putContextData(VersioningService.SKIP_VERSIONING, true);
         }
 
         // XXX Not used, as we override the listener; but it is the right way to force video informations generation.
