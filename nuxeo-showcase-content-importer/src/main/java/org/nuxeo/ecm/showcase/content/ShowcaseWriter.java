@@ -25,8 +25,6 @@ import static org.nuxeo.ecm.platform.picture.api.ImagingDocumentConstants.PICTUR
 import static org.nuxeo.ecm.platform.video.VideoConstants.CTX_FORCE_INFORMATIONS_GENERATION;
 import static org.nuxeo.ecm.platform.video.VideoConstants.VIDEO_FACET;
 
-import java.util.Collections;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.dom4j.Element;
@@ -82,9 +80,7 @@ public class ShowcaseWriter extends DocumentModelWriter {
         // then load schemas data
         loadSchemas(xdoc, doc, xdoc.getDocument());
 
-        if (doc.hasSchema("uid")) {
-            doc.putContextData(VersioningService.SKIP_VERSIONING, true);
-        }
+        doc.putContextData(VersioningService.SKIP_VERSIONING, true);
 
         // XXX Not used, as we override the listener; but it is the right way to force video informations generation.
         if (doc.hasFacet(VIDEO_FACET)) {
@@ -95,7 +91,7 @@ public class ShowcaseWriter extends DocumentModelWriter {
             doc.putContextData(CTX_FORCE_VIEWS_GENERATION, true);
         }
 
-        session.importDocuments(Collections.singletonList(doc));
+        session.createDocument(doc);
 
         // load into the document the system properties, document needs to exist
         loadSystemInfo(doc, xdoc.getDocument());
