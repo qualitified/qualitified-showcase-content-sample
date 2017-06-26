@@ -10,5 +10,18 @@
       class="org.nuxeo.ecm.showcase.content.ShowcaseVideoImportedListener" priority="20">
       <event>documentImported</event>
     </listener>
+
+    <listener name="pictureChangedListener">
+      <event>aboutToCreate</event>
+      <event>documentImported</event>
+      <event>beforeDocumentModification</event>
+    </listener>
+
+    <listener name="pictureViewsGenerationListener">
+      <event>documentCreated</event>
+      <event>documentImported</event>
+      <event>documentModified</event>
+    </listener>
+
   </extension>
 </component>
