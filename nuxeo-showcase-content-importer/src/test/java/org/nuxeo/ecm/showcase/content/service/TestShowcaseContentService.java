@@ -1,9 +1,14 @@
 package org.nuxeo.ecm.showcase.content.service;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.nuxeo.ecm.core.api.CoreSession;
-import org.nuxeo.ecm.core.api.DocumentModel;
 import org.nuxeo.ecm.core.api.DocumentModelList;
 import org.nuxeo.ecm.core.test.annotations.Granularity;
 import org.nuxeo.ecm.core.test.annotations.RepositoryConfig;
@@ -14,11 +19,6 @@ import org.nuxeo.runtime.test.runner.Features;
 import org.nuxeo.runtime.test.runner.FeaturesRunner;
 
 import com.google.inject.Inject;
-import org.nuxeo.runtime.test.runner.LocalDeploy;
-
-import java.util.List;
-
-import static org.junit.Assert.*;
 
 @RunWith(FeaturesRunner.class)
 @Features({ PlatformFeature.class, AuditFeature.class })
@@ -28,7 +28,7 @@ import static org.junit.Assert.*;
         "org.nuxeo.ecm.platform.filemanager.api", //
         "org.nuxeo.ecm.platform.collections.core", //
         "org.nuxeo.ecm.platform.filemanager.core" })
-@LocalDeploy({ "org.nuxeo.ecm.content.showcase:contrib.xml" })
+@Deploy({ "org.nuxeo.ecm.content.showcase:contrib.xml" })
 public class TestShowcaseContentService {
 
     public static final String DOC_ID = "921f3887-6270-49ea-bec0-2dd48ba44a89";
