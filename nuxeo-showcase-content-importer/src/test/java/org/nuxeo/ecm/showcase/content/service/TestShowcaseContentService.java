@@ -23,12 +23,12 @@ import com.google.inject.Inject;
 @RunWith(FeaturesRunner.class)
 @Features({ PlatformFeature.class, AuditFeature.class })
 @RepositoryConfig(cleanup = Granularity.METHOD)
-@Deploy({ "org.nuxeo.ecm.content.showcase", //
-        "org.nuxeo.ecm.platform.thumbnail", //
-        "org.nuxeo.ecm.platform.filemanager.api", //
-        "org.nuxeo.ecm.platform.collections.core", //
-        "org.nuxeo.ecm.platform.filemanager.core" })
-@Deploy({ "org.nuxeo.ecm.content.showcase:contrib.xml" })
+@Deploy("org.nuxeo.ecm.content.showcase")
+@Deploy("org.nuxeo.ecm.platform.thumbnail")
+@Deploy("org.nuxeo.ecm.platform.filemanager.api")
+@Deploy("org.nuxeo.ecm.platform.collections.core")
+@Deploy("org.nuxeo.ecm.platform.filemanager.core")
+@Deploy("org.nuxeo.ecm.content.showcase:contrib.xml")
 public class TestShowcaseContentService {
 
     public static final String DOC_ID = "921f3887-6270-49ea-bec0-2dd48ba44a89";
