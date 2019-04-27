@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<component name="org.showcasecontent.marketplace.resources">
+  <extension target="org.nuxeo.ecm.showcase.content" point="contents">
+    <content name="showcase-sample">
+      <filename>showcase_sample.zip</filename>
+    </content>
+  </extension>
+</component>

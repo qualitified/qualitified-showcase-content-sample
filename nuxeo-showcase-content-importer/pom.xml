@@ -8,8 +8,7 @@
   </parent>
 
   <artifactId>nuxeo-showcase-content-importer</artifactId>
-  <name>Nuxeo Showcase Content Importer</name>
-  <description>Nuxeo Showcase Content Importer</description>
+  <name>Nuxeo Showcase Content - Importer</name>
 
   <dependencies>
     <dependency>

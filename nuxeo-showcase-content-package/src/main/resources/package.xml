@@ -1,0 +1,24 @@
+<!-- See documentation at http://doc.nuxeo.com/x/HgIz -->
+<package type="addon" name="nuxeo-showcase-content" version="@VERSION@">
+  <title>Nuxeo Showcase Content</title>
+  <description>
+    <p>The Nuxeo Showcase Content addon imports a set of showcase content so that the repository is not empty for your first steps: office documents, images, videos.</p>
+  </description>
+  <home-page>http://doc.nuxeo.com/</home-page>
+  <vendor>Nuxeo</vendor>
+  <installer restart="true" />
+  <uninstaller restart="true" />
+  <nuxeo-validation>nuxeo_certified</nuxeo-validation>
+  <production-state>proto</production-state>
+  <supported>true</supported>
+  <platforms>
+    <platform>server-@DISTRIB_VERSION@</platform>
+    <platform>server-@DISTRIB_VERSION@-*</platform>
+  </platforms>
+  <dependencies>
+    <package>nuxeo-dam</package>
+  </dependencies>
+  <license>LGPL 2.1</license>
+  <license-url>http://www.gnu.org/licenses/lgpl-2.1.html</license-url>
+  <visibility>PUBLIC</visibility>
+</package>

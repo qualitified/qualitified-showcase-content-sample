@@ -8,13 +8,19 @@
 
   <groupId>org.nuxeo.ecm.platform</groupId>
   <artifactId>nuxeo-showcase-content-parent</artifactId>
-  <name>Nuxeo Showcase Content Parent</name>
+  <name>Nuxeo Showcase Content - Parent POM</name>
   <packaging>pom</packaging>
-  <description>Nuxeo Showcase Content Parent</description>
 
   <modules>
     <module>nuxeo-showcase-content-importer</module>
+    <module>nuxeo-showcase-content-resources</module>
+    <module>nuxeo-showcase-content-package</module>
   </modules>
+
+  <properties>
+    <sample.data.version>1.3.4</sample.data.version>
+    <marketplace.dam.version>6.4.3-SNAPSHOT</marketplace.dam.version>
+  </properties>
 
   <dependencyManagement>
     <dependencies>
@@ -22,6 +28,24 @@
         <groupId>org.nuxeo.ecm.platform</groupId>
         <artifactId>nuxeo-showcase-content-importer</artifactId>
         <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-showcase-content-resources</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <!-- external dependencies -->
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-showcase-content-sample-data</artifactId>
+        <version>${sample.data.version}</version>
+        <type>zip</type>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.marketplace.dam</groupId>
+        <artifactId>marketplace</artifactId>
+        <version>${marketplace.dam.version}</version>
+        <type>zip</type>
       </dependency>
     </dependencies>
   </dependencyManagement>

@@ -1,0 +1,9 @@
+Bundle-ActivationPolicy: lazy
+Bundle-ClassPath: .
+Manifest-Version: 1.0
+Bundle-Vendor: org.nuxeo.ecm.platform
+Bundle-Version: 1.0.0
+Bundle-Name: marketplace-nuxeo-showcase-content-resources
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: org.nuxeo.ecm.platform.marketplace-nuxeo-showcase-content-resources;singleton=true
+Nuxeo-Component: OSGI-INF/showcasecontent-resources-contrib.xml
