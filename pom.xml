@@ -28,7 +28,7 @@
 
   <properties>
     <sample.data.version>1.3.4</sample.data.version>
-    <marketplace.dam.version>6.4.3-SNAPSHOT</marketplace.dam.version>
+    <marketplace.dam.version>6.5.0-SNAPSHOT</marketplace.dam.version>
   </properties>
 
   <dependencyManagement>
