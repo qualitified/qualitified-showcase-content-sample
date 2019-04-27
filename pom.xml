@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>org.nuxeo</groupId>
-    <artifactId>nuxeo-addons-parent</artifactId>
+    <groupId>org.nuxeo.ecm.distribution</groupId>
+    <artifactId>nuxeo-distribution</artifactId>
     <version>11.1-SNAPSHOT</version>
   </parent>
 
@@ -16,6 +16,15 @@
     <module>nuxeo-showcase-content-resources</module>
     <module>nuxeo-showcase-content-package</module>
   </modules>
+
+  <profiles>
+    <profile>
+      <id>ftest</id>
+      <modules>
+        <module>ftest/startup</module>
+      </modules>
+    </profile>
+  </profiles>
 
   <properties>
     <sample.data.version>1.3.4</sample.data.version>
@@ -33,6 +42,12 @@
         <groupId>org.nuxeo.ecm.platform</groupId>
         <artifactId>nuxeo-showcase-content-resources</artifactId>
         <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>org.nuxeo.ecm.platform</groupId>
+        <artifactId>nuxeo-showcase-content-package</artifactId>
+        <version>${project.version}</version>
+        <type>zip</type>
       </dependency>
       <!-- external dependencies -->
       <dependency>
