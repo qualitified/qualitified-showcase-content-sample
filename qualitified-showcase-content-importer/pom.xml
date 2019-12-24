@@ -2,13 +2,14 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>org.nuxeo.ecm.platform</groupId>
-    <artifactId>nuxeo-showcase-content-parent</artifactId>
+    <artifactId>qualitified-showcase-content-parent</artifactId>
     <version>10.10</version>
     <relativePath>../pom.xml</relativePath>
   </parent>
 
-  <artifactId>nuxeo-showcase-content-importer</artifactId>
-  <name>Nuxeo Showcase Content - Importer</name>
+  <artifactId>qualitified-showcase-content-importer</artifactId>
+  <name>Qualitified Showcase Content Importer</name>
+  <description>Qualitified Showcase Content Importer</description>
 
   <dependencies>
     <dependency>
@@ -38,12 +39,10 @@
     <dependency>
       <groupId>org.nuxeo.ecm.platform</groupId>
       <artifactId>nuxeo-platform-video-api</artifactId>
-      <version>${project.version}</version>
     </dependency>
     <dependency>
       <groupId>org.nuxeo.ecm.platform</groupId>
       <artifactId>nuxeo-platform-video-core</artifactId>
-      <version>${project.version}</version>
     </dependency>
 
     <!-- test dependencies -->
